@@ -15,12 +15,8 @@ class Chronometer {
   } 
 
   getSeconds() {
-   if (Math.floor(this.currentTime % 60) > 0 ) {
-     return this.currentTime % 60 
-  } else if (!this.currentTime) {
-    return 0
+    return this.currentTime % 60;
   }
-}
 
   computeTwoDigitNumber(value) {
     if (value <= 9) {
