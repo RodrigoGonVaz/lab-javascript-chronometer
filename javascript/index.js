@@ -38,7 +38,7 @@ function printSeconds() {
     secUniElement.innerHTML = ssTime[1];
 }
 
-// ==> BONUS
+// ==> BONUS1
 function printMilliseconds() {
   let milTime = chronometer.getMilli();
   // Se puede acceder como arreglos
@@ -57,14 +57,22 @@ function printSplit() {
   chronometer.split()*/
   li.innerHTML = splitText
   splitsElement.appendChild(li);
+  
 }
 
 function clearSplits() {
+  const splitsElementLi = document.querySelectorAll('#splits');
+  const li = document.createElement("li")
   let clearSp = chronometer.reset();
+  let clearMil = chronometer.resetMil();
   minDecElement.innerHTML = clearSp;
   minUniElement.innerHTML = clearSp;
   secDecElement.innerHTML = clearSp;
   secUniElement.innerHTML = clearSp;
+  milDecElement.innerHTML = clearMil;
+  milUniElement.innerHTML = clearMil;
+  splitsElementLi.removeChild(li);
+
 }
 
 function setStopBtn() {
@@ -91,12 +99,14 @@ function setResetBtn() {
 btnLeftElement.addEventListener('click', () => {
   if (btnLeftElement.innerHTML === 'STOP' ) {
     chronometer.stop();
+    chronometer.stopMil();
     setStartBtn ();
     setResetBtn ()
   } else {
     setStopBtn ()
     setSplitBtn ()
     chronometer.start(printTime);
+    chronometer.startMil(printTime);
   }
 });
 
