@@ -17,40 +17,54 @@ const milUniElement = document.getElementById('milUni');
 const splitsElement = document.getElementById('splits');
 
 function printTime() {
-  // ... your code goes here
+  // chronometer.start() sirve por detras de la consola(source)
+  // pero no imprime cada segundo o min las siguientes funciones:
+  printMinutes();
+  printSeconds();
+  printMilliseconds()
 }
 
-function printMinutes(mm) {
-  let mmTime = chronometer.getMinutes();
-  let countMin = 0;
-  if (mmTime % 10 === 0) {
-    countMin ++
-    secDecElement.innerHTML = countMin;
-  } else if (mmTime < 9){
-    secUniElement.innerHTML = mmTime;
-}}
+function printMinutes() {
+  let mmTime = chronometer.computeTwoDigitNumber(chronometer.getMinutes());
+    // Se puede acceder como arreglos
+    minDecElement.innerHTML = mmTime[0];
+    minUniElement.innerHTML = mmTime[1];
+}
 
-function printSeconds(ss) {
-  let ssTime = chronometer.getSeconds();
-  let countSec = 0;
-  if (ssTime % 10 === 0) {
-    countSec ++
-    secDecElement.innerHTML = countSec;
-  } else if (ssTime < 9){
-    secUniElement.innerHTML = ssTime;
-}}
+function printSeconds() {
+  let ssTime = chronometer.computeTwoDigitNumber(chronometer.getSeconds());
+    // Se puede acceder como arreglos
+    secDecElement.innerHTML = ssTime[0];
+    secUniElement.innerHTML = ssTime[1];
+}
 
 // ==> BONUS
 function printMilliseconds() {
-  // ... your code goes here
+  let milTime = chronometer.getMilli();
+  // Se puede acceder como arreglos
+  milDecElement.innerHTML = milTime[0]
+  milUniElement.innerHTML = milTime[1]
+
 }
 
+
 function printSplit() {
-  // ... your code goes here
+  let splitText = chronometer.split();
+  // puente de JS a HTLM con CreateElement
+  const li = document.createElement("li")
+  /* cada que la funcion printSplit se corra (cada click)
+  se va a crear un li en HTLM con el texto de la funcion
+  chronometer.split()*/
+  li.innerHTML = splitText
+  splitsElement.appendChild(li);
 }
 
 function clearSplits() {
-  // ... your code goes here
+  let clearSp = chronometer.reset();
+  minDecElement.innerHTML = clearSp;
+  minUniElement.innerHTML = clearSp;
+  secDecElement.innerHTML = clearSp;
+  secUniElement.innerHTML = clearSp;
 }
 
 function setStopBtn() {
@@ -82,15 +96,15 @@ btnLeftElement.addEventListener('click', () => {
   } else {
     setStopBtn ()
     setSplitBtn ()
-    chronometer.start();
+    chronometer.start(printTime);
   }
 });
 
 // Reset/Split Button
 btnRightElement.addEventListener('click', () => {
   if (btnRightElement.innerHTML === 'RESET' ) {
-    chronometer.reset();
+    clearSplits();
   } else {
-    chronometer.split();
+    printSplit();
   }
 });
